@@ -1,0 +1,44 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Indexer Service
+  license:
+    name: MIT
+
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /tweets/{hashtag}:
+    get:
+      tags:
+        - "Twitter"
+      operationId: api.tweets.class_instance.get
+      parameters:
+        - name: hashtag
+          description: Some message.
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 'Tweets by hashtag'
+  /user/twitter/{accountId}:
+    get:
+      tags:
+        - "Twitter"
+      operationId: api.user.class_instance.get
+      parameters:
+        - name: accountId
+          description: User account id.
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: 'User tweets'
