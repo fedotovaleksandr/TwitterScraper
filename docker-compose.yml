@@ -1,0 +1,13 @@
+version: '2'
+services:
+    app:
+        build:
+            context: ./
+            dockerfile: ./docker/Dockerfile
+        ports:
+            - "9090:9090"
+        volumes:
+            - .:/app
+        environment:
+            FLASK_ENV: development
+            FLASK_DEBUG: 1
