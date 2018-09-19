@@ -85,9 +85,11 @@ expected_data = {
 
 }
 
+
 class TweetsExtractorTestCase(unittest.TestCase):
     def setUp(self):
         self.extractor = TweetsExtractor()
+
     def test_extract_tweets(self):
         test_data = tweets_template.format(**expected_data)
         result = self.extractor.extract_tweets(test_data, True)
@@ -105,4 +107,3 @@ class TweetsExtractorTestCase(unittest.TestCase):
         self.assertEqual(expected_data['account_id'], tweet.account.id)
         self.assertEqual(expected_data['account_href'], tweet.account.href)
         self.assertEqual(expected_data['account_name'], tweet.account.fullname)
-

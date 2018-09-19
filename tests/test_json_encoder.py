@@ -10,7 +10,7 @@ class TestJSONSerializable(IJSONSerializable):
         return expected_val
 
 
-class TweetsExtractorTestCase(unittest.TestCase):
+class ApiJSONEncoderTestCase(unittest.TestCase):
     def setUp(self):
         self.encoder = ApiJSONEncoder()
 

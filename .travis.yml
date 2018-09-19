@@ -10,4 +10,4 @@ install:
   - sh install.sh
 script:
   - sh test.sh
-  - find . -name \*.py -exec pycodestyle --ignore=E402 {} +
+  - find . -name \*.py -exec pycodestyle --max-line-length=120 --ignore=E402 {} +
