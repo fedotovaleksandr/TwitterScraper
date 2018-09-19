@@ -5,10 +5,9 @@ python:
   - "3.7-dev"  # 3.7 development branch
 
 before_install:
-  - pip install pep8
+  - pip install pycodestyle
 install:
   - sh install.sh
-# command to run tests
 script:
   - sh test.sh
-  - find . -name \*.py -exec pep8 --ignore=E402 {} +
+  - find . -name \*.py -exec pycodestyle --ignore=E402 {} +
