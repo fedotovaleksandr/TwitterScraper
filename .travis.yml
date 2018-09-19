@@ -7,8 +7,8 @@ python:
 before_install:
   - pip install pep8
 install:
-  - install.sh
+  - sh install.sh
 # command to run tests
 script:
-  - test.sh
+  - sh test.sh
   - find . -name \*.py -exec pep8 --ignore=E402 {} +
