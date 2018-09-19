@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.6"
+  - "3.6-dev"  # 3.6 development branch
+  - "3.7-dev"  # 3.7 development branch
+
+before_install:
+  - pip install pep8
+install:
+  - install.sh
+# command to run tests
+script:
+  - test.sh
+  - find . -name \*.py -exec pep8 --ignore=E402 {} +
