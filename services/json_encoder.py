@@ -6,7 +6,8 @@ from abc import ABCMeta
 class IJSONSerializable:
     __metaclass__ = ABCMeta
 
-    def toJSON(self): raise NotImplementedError
+    def to_json(self):
+        raise NotImplementedError
 
 
 class ApiJSONEncoder(JSONEncoder):
@@ -15,6 +16,6 @@ class ApiJSONEncoder(JSONEncoder):
         if isinstance(obj, datetime):
             return obj.strftime("%I:%M - %d %b %y")
         if isinstance(obj, IJSONSerializable):
-            return obj.toJSON()
+            return obj.to_json()
 
         return super(ApiJSONEncoder, self).default(obj)

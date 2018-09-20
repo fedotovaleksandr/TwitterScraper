@@ -42,7 +42,7 @@ class="ProfileTweet-actionCountForAria" id="profile-tweet-action-favorite-count-
 data-aria-label-part="">97 likes</span> </span> </span> </div> <div class="ProfileTweet-actionList js-actions"
 role="group" aria-label="Tweet actions"> <div class="ProfileTweet-action ProfileTweet-action--reply"> <button
 class="ProfileTweet-actionButton js-actionButton js-actionReply" data-modal="ProfileTweet-reply" type="button"
-aria-describedby="profile-tweet-action-reply-count-aria-1041441861913772033"> <div class="IconContainer js-tooltip" 
+aria-describedby="profile-tweet-action-reply-count-aria-1041441861913772033"> <div class="IconContainer js-tooltip"
 title="Reply"> <span class="Icon Icon--medium Icon--reply"></span> <span class="u-hiddenVisually">Reply</span> </div>
 <span class="ProfileTweet-actionCount "> <span class="ProfileTweet-actionCountForPresentation"
 aria-hidden="true">14</span> </span> </button> </div> <div class="ProfileTweet-action ProfileTweet-action--retweet

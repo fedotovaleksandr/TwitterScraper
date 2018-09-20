@@ -11,5 +11,5 @@ class Account(IJSONSerializable):
         self.href = href
         self.fullname = fullname
 
-    def toJSON(self):
+    def to_json(self):
         return self.__dict__

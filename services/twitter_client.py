@@ -9,7 +9,8 @@ class ITwitterClient:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def get(self, path: str, params: dict, headers: dict = None) -> Response: raise NotImplementedError
+    def get(self, path: str, params: dict, headers: dict = None) -> Response:
+        raise NotImplementedError
 
 
 class TwitterClient(ITwitterClient):

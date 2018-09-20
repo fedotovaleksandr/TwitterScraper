@@ -13,5 +13,5 @@ class Tweet(IJSONSerializable):
     retweets: int
     text: str
 
-    def toJSON(self):
+    def to_json(self):
         return self.__dict__

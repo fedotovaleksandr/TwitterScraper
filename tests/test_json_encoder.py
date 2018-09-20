@@ -6,7 +6,7 @@ expected_val = 'expected_val'
 
 
 class TestJSONSerializable(IJSONSerializable):
-    def toJSON(self):
+    def to_json(self):
         return expected_val
 
 
