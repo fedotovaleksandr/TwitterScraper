@@ -29,9 +29,9 @@ class TweetsRepository:
         self._client = client
 
     def check_response(self, response: Response):
-        if response.status_code == 404:
+        if response.status_code and response.status_code == 404:
             raise EntityNotFoundException()
-        if response.status_code > 500:
+        if response.status_code and response.status_code > 500:
             raise TwitterUnavailableFoundException()
 
     def get_tweets_by_hashtag(self, hashtag: str, limit: int) -> [Tweet]:
