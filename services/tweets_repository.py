@@ -14,7 +14,7 @@ class EntityNotFoundException(ProblemException):
         ProblemException.__init__(self, **kwargs, title=err, detail=err, status=404)
 
 
-class TwitterUnavailableFoundException(ProblemException):
+class TwitterUnavailableException(ProblemException):
     def __init__(self, **kwargs):
         err = 'Twitter unavailable.'
         ProblemException.__init__(self, **kwargs, title=err, detail=err, status=500)
@@ -32,7 +32,7 @@ class TweetsRepository:
         if response.status_code and response.status_code == 404:
             raise EntityNotFoundException()
         if response.status_code and response.status_code > 500:
-            raise TwitterUnavailableFoundException()
+            raise TwitterUnavailableException()
 
     def get_tweets_by_hashtag(self, hashtag: str, limit: int) -> [Tweet]:
         response = self._client.get(
