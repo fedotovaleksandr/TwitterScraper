@@ -11,3 +11,4 @@ services:
         environment:
             FLASK_ENV: development
             FLASK_DEBUG: 1
+            APP_PORT: "9090"
