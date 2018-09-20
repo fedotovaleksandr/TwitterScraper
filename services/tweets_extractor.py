@@ -15,7 +15,7 @@ class TweetExtractorResult:
 
 
 class TweetsExtractor:
-    def extract_tweets(self, content: str, limit: int= None, search_min_pos: bool = True) -> TweetExtractorResult:
+    def extract_tweets(self, content: str, limit: int = None, search_min_pos: bool = True) -> TweetExtractorResult:
         tweets_list = []
         soup = BeautifulSoup(content, 'lxml')
         tweets = soup.find_all('div', class_='js-stream-tweet')

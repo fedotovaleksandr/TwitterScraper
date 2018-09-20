@@ -33,8 +33,8 @@ class TweetsHandlerTestCase(unittest.TestCase):
         self.assertEqual(result, tweets_val)
         self.client.get.assert_called_once()
 
-        firstCall = self.client.get.call_args_list[0]
-        self.assertRegex(str(firstCall[0]), '/hashtag/%s' % expected_hashtag)
+        first_call = self.client.get.call_args_list[0]
+        self.assertRegex(str(first_call[0]), '/hashtag/%s' % expected_hashtag)
 
     def test_tweets_by_hashtag_multiple_limit(self):
         tweet = Tweet()
@@ -48,12 +48,12 @@ class TweetsHandlerTestCase(unittest.TestCase):
         self.assertEqual(result, [tweet, tweet])
         self.assertEqual(2, self.client.get.call_count)
 
-        firstCall = self.client.get.call_args_list[0]
-        self.assertRegex(str(firstCall[0]), '/hashtag/%s' % expected_hashtag)
-        secondCall = self.client.get.call_args_list[1]
-        self.assertRegex(str(secondCall[0]), '/i/search/timeline/')
-        self.assertEqual(expected_min_pos, secondCall[1]['params']['max_position'])
-        self.assertEqual(quote_plus('#%s' % expected_hashtag), secondCall[1]['params']['q'])
+        first_call = self.client.get.call_args_list[0]
+        self.assertRegex(str(first_call[0]), '/hashtag/%s' % expected_hashtag)
+        second_call = self.client.get.call_args_list[1]
+        self.assertRegex(str(second_call[0]), '/i/search/timeline/')
+        self.assertEqual(expected_min_pos, second_call[1]['params']['max_position'])
+        self.assertEqual(quote_plus('#%s' % expected_hashtag), second_call[1]['params']['q'])
 
     def create_tweets_client_response(self):
         response = Response()
@@ -73,8 +73,8 @@ class TweetsHandlerTestCase(unittest.TestCase):
         self.assertEqual(result, tweets_val)
         self.client.get.assert_called_once()
 
-        firstCall = self.client.get.call_args_list[0]
-        self.assertRegex(str(firstCall[0]), '/%s' % expected_username)
+        first_call = self.client.get.call_args_list[0]
+        self.assertRegex(str(first_call[0]), '/%s' % expected_username)
 
     def test_tweets_by_username_multiple_limit(self):
         tweet = Tweet()
@@ -88,8 +88,8 @@ class TweetsHandlerTestCase(unittest.TestCase):
         self.assertEqual(result, [tweet, tweet])
         self.assertEqual(2, self.client.get.call_count)
 
-        firstCall = self.client.get.call_args_list[0]
-        self.assertRegex(str(firstCall[0]), '/%s' % expected_username)
-        secondCall = self.client.get.call_args_list[1]
-        self.assertRegex(str(secondCall[0]), '/i/profiles/show/%s/timeline/tweets' % expected_username)
-        self.assertEqual(expected_min_pos, secondCall[1]['params']['max_position'])
+        first_call = self.client.get.call_args_list[0]
+        self.assertRegex(str(first_call[0]), '/%s' % expected_username)
+        second_call = self.client.get.call_args_list[1]
+        self.assertRegex(str(second_call[0]), '/i/profiles/show/%s/timeline/tweets' % expected_username)
+        self.assertEqual(expected_min_pos, second_call[1]['params']['max_position'])

@@ -13,10 +13,12 @@ class IRequestHandler:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def support(self, request: IRequest) -> bool: raise NotImplementedError
+    def support(self, request: IRequest) -> bool:
+        raise NotImplementedError
 
     @abstractmethod
-    def handle(self, request: IRequest) -> IResponse: raise NotImplementedError
+    def handle(self, request: IRequest) -> IResponse:
+        raise NotImplementedError
 
 
 class QueryHandlerNotFoundException(Exception):
@@ -27,7 +29,8 @@ class IQueryBus:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def handle(self, request: IRequest) -> IResponse: raise NotImplementedError
+    def handle(self, request: IRequest) -> IResponse:
+        raise NotImplementedError
 
 
 class QueryBus(IQueryBus):
