@@ -3,7 +3,7 @@ from urllib.parse import quote_plus
 from connexion import ProblemException
 from requests import Response
 from model.tweet import Tweet
-from services.tweets_extractor import TweetsExtractor
+from services.tweets_extractor import TweetsExtractor, TweetExtractorResult
 from services.twitter_client import ITwitterClient
 from flask_injector import inject
 
@@ -20,6 +20,12 @@ class TwitterUnavailableException(ProblemException):
         ProblemException.__init__(self, **kwargs, title=err, detail=err, status=500)
 
 
+class ExtractionException(ProblemException):
+    def __init__(self, **kwargs):
+        err = 'Extraction problems or Empty content from Twitter.'
+        ProblemException.__init__(self, **kwargs, title=err, detail=err, status=400)
+
+
 class TweetsRepository:
     _client: ITwitterClient
 
@@ -34,6 +40,12 @@ class TweetsRepository:
         if response.status_code and response.status_code > 500:
             raise TwitterUnavailableException()
 
+    def extract_tweets(self, content: str, limit: int = None, search_min_pos: bool = True) -> TweetExtractorResult:
+        try:
+            return self._extractor.extract_tweets(content, limit, search_min_pos)
+        except BaseException as e:
+            raise ExtractionException()
+
     def get_tweets_by_hashtag(self, hashtag: str, limit: int) -> [Tweet]:
         response = self._client.get(
             '/hashtag/{}'.format(quote_plus(hashtag)),
@@ -41,7 +53,7 @@ class TweetsRepository:
 
         )
         self.check_response(response)
-        ext_result = self._extractor.extract_tweets(response.text, limit)
+        ext_result = self.extract_tweets(response.text, limit)
         tweets = ext_result.tweets
 
         if len(tweets) < limit:
@@ -79,7 +91,7 @@ class TweetsRepository:
                 return tweets
 
             html = content["items_html"]
-            new_tweets = self._extractor.extract_tweets(html, limit, False).tweets
+            new_tweets = self.extract_tweets(html, limit, False).tweets
             tweets.extend(new_tweets)
 
             if not content["has_more_items"] and not content["min_position"] or len(new_tweets) == 0:
@@ -95,7 +107,7 @@ class TweetsRepository:
             params={},
         )
         self.check_response(response)
-        ext_result = self._extractor.extract_tweets(response.text, limit)
+        ext_result = self.extract_tweets(response.text, limit)
         tweets = ext_result.tweets
 
         if len(tweets) < limit:
