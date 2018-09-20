@@ -54,7 +54,7 @@ limit: integer, specifies the number of users to retrieve, default should be 30
 
 Example request:
 
-curl -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:xxxx/users/twitter?limit=20
+`curl -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:xxxx/users/twitter?limit=20`
 
 Example response:
 
