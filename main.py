@@ -1,3 +1,4 @@
+import os
 import connexion
 import requests
 from injector import Binder, singleton
@@ -30,4 +31,4 @@ app.app.json_encoder = ApiJSONEncoder
 FlaskInjector(app=app.app, modules=[configure])
 
 if __name__ == '__main__':
-    app.run(port=9090, debug=True)
+    app.run(port=os.environ.get('APP_PORT', 80), debug=bool(os.environ.get('FLASK_DEBUG', False)))
