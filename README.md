@@ -5,13 +5,14 @@ This is microservice based on open search Open Twitter API (https://twitter.com/
 ### Description & sandbox 
 
 This repo configured to automatic CI\CD with Travis and Heroku
-Sandbox:
+
+#### Sandbox:
 https://twitter-scraper-api.herokuapp.com/ui
 
-CI:
+#### CI:
 https://travis-ci.com/fedotovaleksandr/TwitterScraper
 
-#####This service provides two api:
+### This service provides two api:
 
 1)Get tweets by a hashtag. Get the list of tweets with the given hashtag.
 Optional parameters: 
@@ -53,7 +54,7 @@ limit: integer, specifies the number of users to retrieve, default should be 30
 
 Example request:
 
-curl -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:xxxx/users/twitter?limit=20
+`curl -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:xxxx/users/twitter?limit=20`
 
 Example response:
 
@@ -77,9 +78,9 @@ Example response:
 ] 
 ```
 
-###Requirments
+### Requirments
 
-####Docker
+#### Docker
 `docker>=17.12`
 `docker-compose>=1.19`
 
@@ -87,7 +88,7 @@ Example response:
 
  `venv` with `python3.6`
 
-###Installation
+### Installation
 
 1) ```docker-compose build```
 2) ```docker-compose up -d```
@@ -96,7 +97,7 @@ Example response:
 
 ```(venv) sh install.sh```
 
-###Tests
+### Tests
 Simple to run
 
 ```docker-compose exec app sh test.sh```
@@ -104,7 +105,7 @@ Simple to run
 * OR alternative
 ```(venv) sh test.sh```
 
-###Possible improvements
+### Possible improvements
 
 - make exception handling better 
 - implement cache layer 
