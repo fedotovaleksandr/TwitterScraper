@@ -1,10 +1,23 @@
 from typing import Callable
 from urllib.parse import quote_plus
+from connexion import ProblemException
 from requests import Response
 from model.tweet import Tweet
 from services.tweets_extractor import TweetsExtractor
 from services.twitter_client import ITwitterClient
 from flask_injector import inject
+
+
+class EntityNotFoundException(ProblemException):
+    def __init__(self, **kwargs):
+        err = 'Entity not found.'
+        ProblemException.__init__(self, **kwargs, title=err, detail=err, status=404)
+
+
+class TwitterUnavailableFoundException(ProblemException):
+    def __init__(self, **kwargs):
+        err = 'Twitter unavailable.'
+        ProblemException.__init__(self, **kwargs, title=err, detail=err, status=500)
 
 
 class TweetsRepository:
@@ -15,12 +28,19 @@ class TweetsRepository:
         self._extractor = extractor
         self._client = client
 
+    def check_response(self, response: Response):
+        if response.status_code == 404:
+            raise EntityNotFoundException()
+        if response.status_code > 500:
+            raise TwitterUnavailableFoundException()
+
     def get_tweets_by_hashtag(self, hashtag: str, limit: int) -> [Tweet]:
         response = self._client.get(
             '/hashtag/{}'.format(quote_plus(hashtag)),
             params={'f': 'tweets', 'src': 'typd'},
 
         )
+        self.check_response(response)
         ext_result = self._extractor.extract_tweets(response.text, limit)
         tweets = ext_result.tweets
 
@@ -74,6 +94,7 @@ class TweetsRepository:
             '/%s' % quote_plus(username),
             params={},
         )
+        self.check_response(response)
         ext_result = self._extractor.extract_tweets(response.text, limit)
         tweets = ext_result.tweets
 
