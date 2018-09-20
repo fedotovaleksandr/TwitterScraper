@@ -1,8 +1,6 @@
 import re
 from datetime import datetime
-
 from bs4 import BeautifulSoup
-
 from model.account import Account
 from model.tweet import Tweet
 
@@ -17,7 +15,7 @@ class TweetExtractorResult:
 
 
 class TweetsExtractor:
-    def extract_tweets(self, content: str, search_min_pos: bool = True) -> TweetExtractorResult:
+    def extract_tweets(self, content: str, limit: int= None, search_min_pos: bool = True) -> TweetExtractorResult:
         tweets_list = []
         soup = BeautifulSoup(content, 'lxml')
         tweets = soup.find_all('div', class_='js-stream-tweet')
@@ -30,6 +28,9 @@ class TweetsExtractor:
 
             if tweet:
                 tweets_list.append(tweet)
+
+            if limit and limit <= len(tweets_list):
+                break
         min_pos = None
         if search_min_pos:
             min_pos = soup.find("div", class_="stream-container")["data-min-position"]

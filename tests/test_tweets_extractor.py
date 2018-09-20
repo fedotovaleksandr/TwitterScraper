@@ -2,8 +2,7 @@ from datetime import datetime
 import unittest
 from services.tweets_extractor import TweetsExtractor
 
-tweets_template = '''<div class="stream-container  " data-max-position="max_position" data-min-position="{min_position}"
-> <li class="js-stream-item stream-item stream-item " data-item-id="1041441861913772033" 
+tweet_template = '''<li class="js-stream-item stream-item stream-item " data-item-id="1041441861913772033" 
 id="stream-item-tweet-1041441861913772033" data-item-type="tweet"> <div class="tweet js-stream-tweet 
 js-actionable-tweet js-profile-popup-actionable dismissible-content original-tweet js-original-tweet focus" 
 data-tweet-id="1041441861913772033" data-item-id="1041441861913772033" 
@@ -67,7 +66,11 @@ js-actionButton js-actionFavorite" type="button"> <div class="IconContainer js-t
 role="presentation" class="Icon Icon--heart Icon--medium"></span> <div class="HeartAnimation"></div> <span 
 class="u-hiddenVisually">Liked</span> </div> <span class="ProfileTweet-actionCount"> <span 
 class="ProfileTweet-actionCountForPresentation" aria-hidden="true">97</span> </span> </button> </div> </div> </div> 
-</div> </div> </li> '''
+</div> </div> </li>'''
+tweets_template = '''
+<div class="stream-container  " data-max-position="max_position" data-min-position="{min_position}">
+%s
+</div>'''
 
 expected_hashtags = ['#test1', '#test2']
 expected_text = 'some text ' + ' '.join(expected_hashtags) + ' some text'
@@ -91,9 +94,28 @@ class TweetsExtractorTestCase(unittest.TestCase):
         self.extractor = TweetsExtractor()
 
     def test_extract_tweets(self):
-        test_data = tweets_template.format(**expected_data)
-        result = self.extractor.extract_tweets(test_data, True)
+        test_data = (tweets_template % (tweet_template + tweet_template)).format(**expected_data)
+        result = self.extractor.extract_tweets(test_data)
         self.assertEqual(expected_data['min_position'], result.min_position)
+        tweet = result.tweets[0]
+        self.assertEqual(expected_data['likes'], tweet.likes)
+        self.assertEqual(expected_data['replies'], tweet.replies)
+        self.assertEqual(expected_data['retweets'], tweet.retweets)
+
+        self.assertEqual(expected_text, tweet.text)
+        self.assertEqual(expected_hashtags, tweet.hashtags)
+
+        self.assertEqual(datetime.utcfromtimestamp(expected_data['date']), tweet.date)
+
+        self.assertEqual(expected_data['account_id'], tweet.account.id)
+        self.assertEqual(expected_data['account_href'], tweet.account.href)
+        self.assertEqual(expected_data['account_name'], tweet.account.fullname)
+
+    def test_extract_tweets_limit_min_pos(self):
+        test_data = (tweets_template % (tweet_template + tweet_template)).format(**expected_data)
+        result = self.extractor.extract_tweets(test_data, 1, False)
+        self.assertIsNone(result.min_position)
+        self.assertEqual(1, len(result.tweets))
         tweet = result.tweets[0]
         self.assertEqual(expected_data['likes'], tweet.likes)
         self.assertEqual(expected_data['replies'], tweet.replies)
