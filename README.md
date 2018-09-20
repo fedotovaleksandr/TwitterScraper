@@ -11,7 +11,7 @@ https://twitter-scraper-api.herokuapp.com/ui
 CI:
 https://travis-ci.com/fedotovaleksandr/TwitterScraper
 
-#####This service provides two api:
+##### This service provides two api:
 
 1)Get tweets by a hashtag. Get the list of tweets with the given hashtag.
 Optional parameters: 
@@ -77,9 +77,9 @@ Example response:
 ] 
 ```
 
-###Requirments
+### Requirments
 
-####Docker
+#### Docker
 `docker>=17.12`
 `docker-compose>=1.19`
 
@@ -87,7 +87,7 @@ Example response:
 
  `venv` with `python3.6`
 
-###Installation
+### Installation
 
 1) ```docker-compose build```
 2) ```docker-compose up -d```
@@ -96,7 +96,7 @@ Example response:
 
 ```(venv) sh install.sh```
 
-###Tests
+### Tests
 Simple to run
 
 ```docker-compose exec app sh test.sh```
@@ -104,7 +104,7 @@ Simple to run
 * OR alternative
 ```(venv) sh test.sh```
 
-###Possible improvements
+### Possible improvements
 
 - make exception handling better 
 - implement cache layer 
